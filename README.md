@@ -24,7 +24,7 @@ day6_3
 
 day7
 
-day8
+/Arduino/day8
 
 day11
 
