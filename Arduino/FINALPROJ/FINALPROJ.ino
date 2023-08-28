@@ -1,20 +1,15 @@
 #include <ESP8266WiFi.h>
 
-int led = D5;
-
 const char* ssid = "RadheBhai";
 const char* password = "8153022369";
 const char* host = "radhe123.000webhostapp.com";
 
 
-const int soilMoistureValue = A0; // Assuming the soil moisture sensor is connected to analog pin A0
+const int waterLevel = A0; // Assuming the soil moisture sensor is connected to analog pin A0
 
 
 void setup() {
-  Serial.begin(9600);
-  pinMode(led,OUTPUT);
    
-
   Serial.begin(115200);
   delay(100);
   
@@ -39,10 +34,10 @@ void setup() {
 
 
 void loop() {
-  int soilMoistureValue = analogRead(soilMoisturePin);
-  Serial.print("Soil Moisture: ");
-  Serial.println(soilMoistureValue);
-  float s = soilMoistureValue;
+  int waterLevel = analogRead(waterLevel);
+  Serial.print("Water Level: ");
+  Serial.println(waterLevel);
+  float s = waterLevel;
   delay(1000);
    
 
@@ -62,16 +57,10 @@ void loop() {
     return;
   }
   
-  String url = "/API/soimoi.php?soilMoistureValue=" + String(s);
+  String url = "/API/wl.php?waterLevel=" + String(s);
   Serial.print("Requesting URL: ");
   Serial.println(url);
 
-  if (soilMoistureValue > 800){
-      digitalWrite(led, HIGH);
-  }
-  if (soilMoistureValue < 800) {
-    digitalWrite(led,LOW);
-  }
   client.print(String("GET ") + url + " HTTP/1.1\r\n" +
                "Host: " + host + "\r\n" + 
                "Connection: close\r\n\r\n");
